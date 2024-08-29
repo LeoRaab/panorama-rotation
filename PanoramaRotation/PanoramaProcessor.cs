@@ -65,28 +65,18 @@ public class PanoramaProcessor
                 pano.yawToNorth = yaw?.ToString(CultureInfo.InvariantCulture);
             }
 
-            try
-            {
-                var filePath =
-                    $"{Path.GetDirectoryName(_csvPath)}\\{Path.GetFileNameWithoutExtension(_csvPath)}_yaw.csv";
-                var streamWriter = new StreamWriter(filePath);
-                using var csvWriter = new CsvWriter(streamWriter, _csvConfig);
-                csvWriter.WriteRecords(_panoramaData);
-            }
-            catch (Exception e)
-            {            
-                Console.WriteLine($"Writing csv file failed with following error: {e.Message}");
-            }
-            finally
-            {
-                Console.WriteLine($"Rotation of {_panoramaData.Count} panorama(s) successfully processed!");
-            }
-            
-            
+            var filePath = $"{Path.GetDirectoryName(_csvPath)}\\{Path.GetFileNameWithoutExtension(_csvPath)}_yaw.csv";
+            var streamWriter = new StreamWriter(filePath);
+            using var csvWriter = new CsvWriter(streamWriter, _csvConfig);
+            csvWriter.WriteRecords(_panoramaData);
         }
         catch (Exception e)
         {
             Console.WriteLine($"Writing csv file failed with following error: {e.Message}");
+        }
+        finally
+        {
+            Console.WriteLine($"Rotation of {_panoramaData?.Count} panorama(s) successfully processed!");
         }
     }
 }
